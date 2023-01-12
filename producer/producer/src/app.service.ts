@@ -5,8 +5,8 @@ import axios from 'axios';
 import { load } from 'cheerio';
 
 @Injectable()
-export class AppService { 
-  constructor(@Inject('News_Service') private client: ClientProxy){}
+export class AppService {
+  constructor(@Inject('News_Service') private client: ClientProxy) {}
   async getHello(): Promise<string> {
     return 'Hello World!';
   }
@@ -35,7 +35,6 @@ export class AppService {
     return context;
   }
   async sendNews(message: Promise<string[]>) {
-   return this.client.send<Promise<string[]>>({ cmd: 'sendNews' }, message);
-     
+    return this.client.send<Promise<string[]>>({ cmd: 'sendNews' }, message);
   }
 }

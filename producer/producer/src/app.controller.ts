@@ -10,14 +10,13 @@ export class AppController {
   getHello(): Promise<string> {
     return this.appService.getHello();
   }
-  @Get('news') 
+  @Get('news')
   getNews(): Promise<string[]> {
-    return  this.appService.scrapeData();
+    return this.appService.scrapeData();
   }
   @Get('sendNewsToQueue')
   sendNews(): any {
     const context = this.appService.scrapeData();
     return this.appService.sendNews(context);
-
   }
 }
