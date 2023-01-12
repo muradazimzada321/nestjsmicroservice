@@ -19,13 +19,32 @@ let AppController = class AppController {
     getHello() {
         return this.appService.getHello();
     }
+    getNews() {
+        return this.appService.scrapeData();
+    }
+    sendNews() {
+        const context = this.appService.scrapeData();
+        return this.appService.sendNews(context);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", Promise)
 ], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)('news'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getNews", null);
+__decorate([
+    (0, common_1.Get)('sendNewsToQueue'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], AppController.prototype, "sendNews", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

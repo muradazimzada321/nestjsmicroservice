@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 
 @Controller()
@@ -9,4 +10,8 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  // @Get('receiveNews')
+  // receiveNews(): Promise<string[]> {
+  //   return this.appService.accumulate();
+  // }
 }
