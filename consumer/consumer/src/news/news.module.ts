@@ -8,6 +8,7 @@ import { NewsService } from './news.service';
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'News', schema: NewsSchema }])],
   controllers: [NewsController],
-  providers: [NewsRepository, NewsService, NewsController],
+  providers: [NewsRepository, NewsService, NewsController], 
+  exports: [NewsService]
 })
 export class NewsModule {}

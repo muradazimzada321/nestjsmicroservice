@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
 import axios from 'axios';
 import { load } from 'cheerio';
 
 @Injectable()
 export class AppService {
-  constructor(@Inject('News_Service') private client: ClientProxy) {}
+ 
   async getHello(): Promise<string> {
     return 'Hello World!';
   }
@@ -34,7 +33,5 @@ export class AppService {
       });
     return context;
   }
-  async sendNews(message: Promise<string[]>) {
-    return this.client.send<Promise<string[]>>({ cmd: 'sendNews' }, message);
-  }
+  
 }

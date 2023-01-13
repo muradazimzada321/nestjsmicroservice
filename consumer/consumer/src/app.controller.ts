@@ -1,17 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
-import { AppService } from './app.service';
-
+import { Controller, Get, Inject } from '@nestjs/common';
+import { EventPattern, Payload, RmqContext } from '@nestjs/microservices';
+import { findIndex } from 'rxjs';
+import { News } from './news/news.schema';
+import { NewsService } from './news/news.service';
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  constructor(private readonly newsService: NewsService) {}
+  @Get('/news')
+  @EventPattern('sendNews')
+  getNotifications(@Payload() data: string[]) {
+    // const channel = context.getChannelRef();
+    // const originalMsg = context.getMessage();
+    console.log(data);
+    const newsArray = data.map((x) => {
+      return new News(x.substring(0, 10), x);
+    });
+    this.newsService.addNewsBulk(newsArray);
+    //  channel.ack(originalMsg);
   }
-  // @Get('receiveNews')
-  // receiveNews(): Promise<string[]> {
-  //   return this.appService.accumulate();
-  // }
 }

@@ -8,13 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const microservices_1 = require("@nestjs/microservices");
 let AppController = class AppController {
-    constructor(appService) {
+    constructor(appService, client) {
         this.appService = appService;
+        this.client = client;
     }
     getHello() {
         return this.appService.getHello();
@@ -22,9 +27,9 @@ let AppController = class AppController {
     getNews() {
         return this.appService.scrapeData();
     }
-    sendNews() {
-        const context = this.appService.scrapeData();
-        return this.appService.sendNews(context);
+    async sendNews() {
+        const context = await this.appService.scrapeData();
+        this.client.emit('sendNews', context);
     }
 };
 __decorate([
@@ -43,11 +48,12 @@ __decorate([
     (0, common_1.Get)('sendNewsToQueue'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], AppController.prototype, "sendNews", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __param(1, (0, common_1.Inject)('News_Service')),
+    __metadata("design:paramtypes", [app_service_1.AppService, microservices_1.ClientProxy])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

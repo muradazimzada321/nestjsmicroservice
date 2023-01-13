@@ -17,8 +17,13 @@ export class NewsRepository {
     return newsCreated.save();
   }
   async createBulk(news: News[]) {
+    //this.newsModel.bulkWrite(news);
     // Model.collection.insertMany(news,)
-    const NEWS = mongoose.model('News', NewsSchema);
-    NEWS.collection.insertMany(news);
+    news.forEach(x => {
+      const newsCreated = new this.newsModel(x);
+      newsCreated.save();
+    })
+    // const NEWS = mongoose.model('News', NewsSchema);
+    // NEWS.collection.insertMany(news);
   }
 }

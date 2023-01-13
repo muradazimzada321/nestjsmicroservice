@@ -14,7 +14,7 @@ export class NewsController implements OnModuleInit {
     //console.log(context.length)
     //news to be sent to rabbitmq channels
     //await this.writeData(context);
-    console.log('newsController initalized');
+    //console.log('newsController initalized');
   }
   @Get()
   async getNews(): Promise<News[]> {

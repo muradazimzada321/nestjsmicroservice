@@ -11,9 +11,9 @@ async function bootstrap() {
             urls: ['amqp://localhost:5672'],
             queue: 'news_queue',
             queueOptions: {
-                durable: false
-            }
-        }
+                durable: false,
+            },
+        },
     });
     await app.startAllMicroservices();
     await app.listen(3000);
